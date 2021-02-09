@@ -1,0 +1,87 @@
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org" th:replace="base::Layout(~{::section})">
+	<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+	</head>
+	<body>
+	<section >
+	 <div class="container">
+	 <div class="row">
+	  <div class="col-md-8 offset md-2">
+	  <div class="mycard mt-2">
+	  <div th:if="${session.message}" th:classappend="${session.message.type}"  class="alert" role="alert">
+	  <p class="text-center" th:text="${session.message.content}"></p>
+	  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+	  </div>
+	
+	  <div class="container text-center">
+	  <img class="my-img" th:src="@{/img/signup.png}"></img>
+	  </div>
+	   <h1 class="text-center">SignUp Here</h1>
+	   <form  action="" th:action="@{/do_register}" method="post" th:objects="${user}">
+	   <!-- name field -->
+	   <div class="form-group">
+	    <label for="name_field">Name</label>
+	    <input type="text" name="name" 
+	    class="form-control" 
+	    th:classappend="${#fields.hasErrors('user.name') ? 'is-invalid':' '}"
+	    id="name_field" aria-describedby="emailHelp"
+	    placeholder="Your Name" required="required"
+	    th:value="${user.name}"
+	    ></input>
+	    <div class="invalid-feedback" th:each="e:${#fields.errors('user.name')}" th:text="${e}">
+        </div>
+       
+	    </div>
+	   <!-- email  field -->
+	   <div class="form-group">
+	    <label for="email_field">Email address</label>
+	    <input type="email" name="email" class="form-control" id="email_field" aria-describedby="emailHelp"
+	    placeholder="Your Email " required="required"
+	    th:value="${user.email}">
+	      </div>
+	   <!-- password field -->
+	  <div class="form-group">
+	    <label for="password_field">Password</label>
+	    <input type="password" name="password" class="form-control" id="password_field"
+	    placeholder="Your password" required="required">
+	  </div>
+	     <!-- about field --> 
+        <div class="form-group">
+        <textarea rows="6" name="description" class="form-control" 
+        placeholder="Enter something yourself"
+        th:classappend="${#fields.hasErrors('user.description') ? 'is-invalid':' '}"
+        th:text="${user.description}"
+        ></textarea>
+        <div class="invalid-feedback" th:each="e:${#fields.errors('user.description')}" th:text="${e}">
+        </div>
+        </div>
+        <!--terms and condition  -->
+        <div class="form-group form-check text-center">
+        <input type="checkbox" class="form-check" placeholder="Accept terms and condition here"
+        id="agreement"
+        name="agreement"
+        ></input>
+        
+        </div>
+        <div id="register-link" class="text-right md-5">
+                                <a href="/login" class="text-info">Login here</a>
+                            </div>
+        <div class="container text-center">
+        <button type="submit" class="btn btn-primary text-white">Submit</button>
+        <button type="reset" class="btn btn-warning text-white">Reset</button>
+        
+        </div>
+	     
+	   </form>
+	  </div>
+	 
+	  </div>
+	 
+	 </div>
+	 </div>
+	</section>
+	
+	</body>
+	</html>
